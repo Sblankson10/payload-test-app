@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -30,25 +31,25 @@ func DbConnect1() (db *sql.DB) {
 	var err error
 	db, err = sql.Open("mysql", dsn.FormatDSN())
 	if err != nil {
-		//log.Fatal(err)
+		log.Fatal(err)
 		fmt.Printf("failed to open database connection: %s", err)
 	}
 
 	defer func(db *sql.DB) {
 		err := db.Close()
 		if err != nil {
-
+			log.Fatal(err)
 		}
 	}(db)
 
 	pingErr := db.Ping()
 	if err != nil {
-		//log.Fatal(pingErr)
-		fmt.Println("error is here at ping ", pingErr)
+		log.Fatal(pingErr)
+		fmt.Printf("failed to ping database connection: %s", pingErr)
 	}
 
 	// upon successful connection
-	// db.SetConnMaxLifetime(10 * time.Second)
+	db.SetConnMaxLifetime(10 * time.Second)
 	log.Println("[db] connection successful")
 	return
 }
