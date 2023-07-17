@@ -10,6 +10,7 @@ func Insert(provider *entities.CreateProvider, db *sql.DB) (int64, error) {
 	result, err := db.Exec("INSERT INTO payloads (deposits_id, provider_ref) VALUES (?, ?)",
 		provider.DepositsId, provider.ProviderRef)
 	if err != nil {
+		fmt.Println("I can not insert")
 		return 0, fmt.Errorf("add provider: %v", err)
 	}
 

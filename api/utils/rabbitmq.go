@@ -96,14 +96,6 @@ func RabbitMqConnect() {
 	// var payload *entities.IncomingPayload
 	go func() {
 		for msg := range msgs {
-			byteMsg, err := Deserialize(msg.Body)
-			if err != nil {
-				fmt.Printf("deserialize : %v\n", err)
-				// panic(err)
-			}
-
-			fmt.Printf("Received Messages: %v\n", byteMsg)
-
 			var incomingPayload entities.IncomingPayload
 			err = json.Unmarshal(msg.Body, &incomingPayload)
 			if err != nil {
