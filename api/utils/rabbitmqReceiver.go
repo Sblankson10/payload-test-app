@@ -54,7 +54,7 @@ func RabbitMqReceiver() {
 				// panic(err)
 			}
 
-			fmt.Printf("Received Messages second: %v\n", incomingPayload)
+			fmt.Printf("Received Messages : %v\n", incomingPayload)
 
 			provider := &entities.CreateProvider{
 				DepositsId:  incomingPayload.DepositsId,
