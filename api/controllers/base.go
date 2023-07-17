@@ -2,25 +2,20 @@ package controllers
 
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"os"
 	"payload-app/api/utils"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 )
 
 type Server struct {
 	Db     *sql.DB
 	Router *mux.Router
 }
-
-//func (s *Server) Init() {
-//	s.Db = utils.DbConnect()
-//	utils.RabbitMqConnect()
-//	s.initRoutes()
-//}
 
 func (s *Server) Init() {
 	db, err := utils.DbConnect()
@@ -29,7 +24,8 @@ func (s *Server) Init() {
 	}
 	s.Db = db
 
-	utils.RabbitMqConnect()
+	utils.RabbitMqPublisher()
+	utils.RabbitMqReceiver()
 	s.initRoutes()
 }
 
