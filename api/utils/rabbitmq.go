@@ -110,7 +110,11 @@ func RabbitMqConnect() {
 				ProviderRef: incomingPayload.ProviderRef,
 			}
 
-			var db = DbConnect()
+			//var db = DbConnect()
+			db, err := DbConnect()
+			if err != nil {
+				panic(err)
+			}
 			id, err := models.Insert(provider, db)
 			if err != nil {
 				fmt.Printf("insert operation: %v\n", err)
